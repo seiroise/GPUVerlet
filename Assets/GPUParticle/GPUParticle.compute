@@ -1,0 +1,33 @@
+﻿#pragma kernel MainCS
+
+struct ParticleData {
+	float2 position;
+	float2 radius;
+};
+
+#define SIMULATION_BLOCK_SIZE (256)
+
+StructuredBuffer<ParticleData> _ParticleDataBufferR;
+RWStructuredBuffer<ParticleData> _ParticleDataBuffer;
+
+// 時間
+float _Time;
+
+[numthreads(SIMULATION_BLOCK_SIZE, 1, 1)]
+void MainCS(
+	uint3 dtID : SV_DispatchThreadID
+) {
+	// 自身のスレッド全体での番号
+	const uint pID = dtID.x;
+	ParticleData p = _ParticleDataBufferR[pID];
+	float2 position = p.position;
+	float2 radius = p.radius;
+
+	// sinカーブでちょっと変化させる
+	radius.y = sin(_Time) * 0.2;
+
+	p.position = position;
+	p.radius = radius;
+
+	_ParticleDataBuffer[pID] = p;
+}

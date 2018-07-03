@@ -1,0 +1,86 @@
+﻿#pragma kernel ParticleCS
+#pragma kernel EdgeCS
+#pragma kernel ForceFieldCS
+
+struct ParticleData {
+	float2 position;
+	float2 prevPosition;
+	float size;
+};
+
+struct EdgeData {
+	uint aID;
+	uint bID;
+	float length;
+	float width;
+};
+
+#define SIMULATION_SIZE (256)
+
+StructuredBuffer<ParticleData> _ParticleDataBufferR;
+RWStructuredBuffer<ParticleData> _ParticleDataBufferW;
+
+StructuredBuffer<EdgeData> _EdgeDataBufferR;
+
+float _Damping;
+
+// パーティクルシミュレート用カーネル
+[numthreads(SIMULATION_SIZE, 1, 1)]
+void ParticleCS(
+	uint3 dtID : SV_DispatchThreadID
+) {
+	const uint id = dtID.x;
+	ParticleData p = _ParticleDataBufferR[id];
+
+	float2 vel = p.position - p.prevPosition;
+
+	p.prevPosition = p.position;
+	p.position += vel * _Damping;
+
+	_ParticleDataBufferW[id] = p;
+}
+
+// エッジシミュレート用カーネル
+[numthreads(SIMULATION_SIZE, 1, 1)]
+void EdgeCS(
+	uint3 dtID : SV_DispatchThreadID
+) {
+	const uint id = dtID.x;
+	EdgeData e = _EdgeDataBufferR[id];
+
+	ParticleData a = _ParticleDataBufferR[e.aID];
+	ParticleData b = _ParticleDataBufferR[e.bID];
+
+	float2 vel = a.position - b.position;
+	float current = length(vel);
+	float f = ((current - e.length) / current) * 0.5;
+
+	float2 ac = vel * f;
+
+	a.position -= ac;
+	b.position += ac;
+
+	_ParticleDataBufferW[e.aID] = a;
+	_ParticleDataBufferW[e.bID] = b;
+}
+
+// 狭い力場の座標(x, y)、力場の大きさ(z)
+float4 _ForceField;
+
+// パーティクルに力場の影響を与える
+[numthreads(SIMULATION_SIZE, 1, 1)]
+void ForceFieldCS(
+	uint3 dtID : SV_DispatchThreadID
+) {
+	const uint id = dtID.x;
+
+	ParticleData p = _ParticleDataBufferR[id];
+
+	// 力場からの距離の基づいて座標を動かす
+	float2 delta = _ForceField.xy - p.position;
+	float len = length(delta);
+	float f = min(1 - ((len - _ForceField.z) / len), 0.2);
+	p.position += delta * f * 0.001;
+
+	_ParticleDataBufferW[id] = p;
+}
