@@ -14,14 +14,12 @@ namespace Seiro.GPUVerlet
 
         /// <summary>
         /// パーティクル
-        /// </summary>	
-        [SerializeField]
+        /// </summary>
         List<VParticle> _particles;
 
         /// <summary>
         /// エッジ
         /// </summary>
-        [SerializeField]
         List<VEdge> _edges;
 
         /// <summary>
@@ -141,20 +139,6 @@ namespace Seiro.GPUVerlet
         public IExternalStep[] GetAfterSteps()
         {
             return _afterSteps.ToArray();
-        }
-
-        /// <summary>
-        /// パーティクル全体の座標変換を行う
-        /// </summary>
-        /// <param name="translate"></param>
-        public void TranslateParticles(Matrix4x4 translate)
-        {
-            for (var i = 0; i < _particles.Count; ++i)
-            {
-                var t = _particles[i];
-                t.position = t.prevPosition = translate.MultiplyPoint3x4(t.position);
-                _particles[i] = t;
-            }
         }
 
         #endregion
