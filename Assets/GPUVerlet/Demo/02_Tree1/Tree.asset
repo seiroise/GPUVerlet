@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e16df69e28374fedb6fbe99036c63e2, type: 3}
   m_Name: Tree
   m_EditorClassIdentifier: 
-  _maxDepth: 6
+  _maxDepth: 10
   _initialLength: 2
   _branchWidth: 0.1
   _leafColor:
