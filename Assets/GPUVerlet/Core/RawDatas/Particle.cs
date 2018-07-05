@@ -9,19 +9,16 @@ namespace Seiro.GPUVerlet.Core.RawDatas
     [System.Serializable]
     public struct Particle
     {
-        /// <summary>
-        /// 現在の位置
-        /// </summary>
         public Vector2 position;
-
-        /// <summary>
-        /// 古い位置
-        /// </summary>
         public Vector2 oldPosition;
+		public float size;
+		public Color color;
 
-        public Particle(Vector2 position)
+        public Particle(Vector2 position, float size, Color color)
         {
             this.position = this.oldPosition = position;
+			this.size = size;
+			this.color = color;
         }
     }
 }

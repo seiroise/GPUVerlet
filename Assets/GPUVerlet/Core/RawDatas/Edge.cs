@@ -1,4 +1,6 @@
-﻿namespace Seiro.GPUVerlet.Core.RawDatas
+﻿using UnityEngine;
+
+namespace Seiro.GPUVerlet.Core.RawDatas
 {
 
     /// <summary>
@@ -8,26 +10,21 @@
     public struct Edge
     {
 
-        /// <summary>
-        /// パーティクルAの番号
-        /// </summary>
         public int aID;
-
-        /// <summary>
-        /// パーティクルBの番号
-        /// </summary>
         public int bID;
+		public float restLength;
 
-        /// <summary>
-        /// パーティクル間の静止距離
-        /// </summary>
-        public float restLength;
+		public float width;
+		public Color color;
 
-        public Edge(int aID, int bID, float restLength)
+        public Edge(int aID, int bID, float restLength, float width, Color color)
         {
             this.aID = aID;
             this.bID = bID;
             this.restLength = restLength;
+
+			this.width = width;
+			this.color = color;
         }
     }
 }
