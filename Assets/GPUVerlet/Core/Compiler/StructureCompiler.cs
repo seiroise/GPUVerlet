@@ -10,7 +10,7 @@ namespace Seiro.GPUVerlet.Core.Converters
 	/// <summary>
 	/// 構造体を実際に使用できる状態に仕上げる
 	/// </summary>
-	public class StructureConverter
+	public static class StructureConverter
 	{
 
 		#region 外部インタフェース
@@ -20,12 +20,11 @@ namespace Seiro.GPUVerlet.Core.Converters
 		/// </summary>
 		/// <param name="structure"></param>
 		/// <param name="materialDict"></param>
-		public CompiledStructure Compile(RefStructure structure, MaterialDictionary materialDict)
+		public static CompiledStructure Compile(RefStructure structure, MaterialDictionary materialDict)
 		{
 			// パーティクルのuidとindexの辞書を作成
 			var refParticles = structure.GetParticles();
 			var refEdges = structure.GetEdges();
-			var indexDict = CreateUID2IndexDictionary(refParticles);
 
 			// 描画用マテリアルの順番を考慮する
 			var matDict = materialDict.ExportDictionry();
@@ -37,8 +36,9 @@ namespace Seiro.GPUVerlet.Core.Converters
 			var materialOrderRefEdges = AlignEdgesWithMaterialOrder(refEdges, edgeMaterialList);
 
 			// 各種データを変換
-			var particles = CompileParticles(refParticles);
-			var edges = CompileEdges(refEdges, refParticles, indexDict);
+			var indexDict = CreateUID2IndexDictionary(materialOrderRefParticles);
+			var particles = CompileParticles(materialOrderRefParticles);
+			var edges = CompileEdges(materialOrderRefEdges, materialOrderRefParticles, indexDict);
 
 			// マテリアルとそれぞれのオフセットを配列に
 			var particleMaterials = particleMaterialList.Select(x => x.Key).ToArray();
@@ -47,7 +47,11 @@ namespace Seiro.GPUVerlet.Core.Converters
 			var particleOffsets = CreateMaterialOffsets(particleMaterialList);
 			var edgeOffsets = CreateMaterialOffsets(edgeMaterialList);
 
-			return new CompiledStructure(particles, edges, particleMaterials, edgeMaterials, particleOffsets, edgeOffsets);
+			// それぞれのマテリアル毎のパーティクルとエッジの数を配列に
+			var particleCounts = CalcCountEachMaterials(particleMaterialList);
+			var edgeCounts = CalcCountEachMaterials(edgeMaterialList);
+
+			return new CompiledStructure(particles, edges, particleMaterials, edgeMaterials, particleOffsets, edgeOffsets, particleCounts, edgeCounts);
 		}
 
 		#endregion
@@ -59,7 +63,7 @@ namespace Seiro.GPUVerlet.Core.Converters
 		/// </summary>
 		/// <param name="particles"></param>
 		/// <returns></returns>
-		Dictionary<uint, int> CreateUID2IndexDictionary(RefParticle[] particles)
+		static Dictionary<uint, int> CreateUID2IndexDictionary(RefParticle[] particles)
 		{
 			var dict = new Dictionary<uint, int>();
 
@@ -76,7 +80,7 @@ namespace Seiro.GPUVerlet.Core.Converters
 		/// </summary>
 		/// <param name="particles"></param>
 		/// <returns></returns>
-		List<KeyValuePair<UnityEngine.Material, List<int>>> CreateParticleMaterialList(RefParticle[] particles, Dictionary<string, UnityEngine.Material> matDict)
+		static List<KeyValuePair<UnityEngine.Material, List<int>>> CreateParticleMaterialList(RefParticle[] particles, Dictionary<string, UnityEngine.Material> matDict)
 		{
 			var dict = new Dictionary<UnityEngine.Material, List<int>>();
 
@@ -103,7 +107,7 @@ namespace Seiro.GPUVerlet.Core.Converters
 		/// </summary>
 		/// <param name="edges"></param>
 		/// <returns></returns>
-		List<KeyValuePair<UnityEngine.Material, List<int>>> CreateEdgeMaterialList(RefEdge[] edges, Dictionary<string, UnityEngine.Material> matDict)
+		static List<KeyValuePair<UnityEngine.Material, List<int>>> CreateEdgeMaterialList(RefEdge[] edges, Dictionary<string, UnityEngine.Material> matDict)
 		{
 			var dict = new Dictionary<UnityEngine.Material, List<int>>();
 
@@ -131,7 +135,7 @@ namespace Seiro.GPUVerlet.Core.Converters
 		/// <param name="src"></param>
 		/// <param name="matIndexList"></param>
 		/// <returns></returns>
-		RefParticle[] AlignParticlesWithMaterialOrder(RefParticle[] src, List<KeyValuePair<UnityEngine.Material, List<int>>> matIndexList)
+		static RefParticle[] AlignParticlesWithMaterialOrder(RefParticle[] src, List<KeyValuePair<UnityEngine.Material, List<int>>> matIndexList)
 		{
 			var dst = new List<RefParticle>();
 
@@ -153,7 +157,7 @@ namespace Seiro.GPUVerlet.Core.Converters
 		/// <param name="src"></param>
 		/// <param name="matIndexList"></param>
 		/// <returns></returns>
-		RefEdge[] AlignEdgesWithMaterialOrder(RefEdge[] src, List<KeyValuePair<UnityEngine.Material, List<int>>> matIndexList)
+		static RefEdge[] AlignEdgesWithMaterialOrder(RefEdge[] src, List<KeyValuePair<UnityEngine.Material, List<int>>> matIndexList)
 		{
 			var dst = new List<RefEdge>();
 
@@ -174,7 +178,7 @@ namespace Seiro.GPUVerlet.Core.Converters
 		/// </summary>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		Particle[] CompileParticles(RefParticle[] src)
+		static Particle[] CompileParticles(RefParticle[] src)
 		{
 			var dst = new Particle[src.Length];
 
@@ -193,7 +197,7 @@ namespace Seiro.GPUVerlet.Core.Converters
 		/// <param name="src"></param>
 		/// <param name="indexDict"></param>
 		/// <returns></returns>
-		Edge[] CompileEdges(RefEdge[] src, RefParticle[] particles, Dictionary<uint, int> indexDict)
+		static Edge[] CompileEdges(RefEdge[] src, RefParticle[] particles, Dictionary<uint, int> indexDict)
 		{
 			var dst = new Edge[src.Length];
 
@@ -217,7 +221,7 @@ namespace Seiro.GPUVerlet.Core.Converters
 		/// </summary>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		int[] CreateMaterialOffsets(List<KeyValuePair<UnityEngine.Material, List<int>>> src)
+		static int[] CreateMaterialOffsets(List<KeyValuePair<UnityEngine.Material, List<int>>> src)
 		{
 			var dst = new int[src.Count];
 			var sum = 0;
@@ -225,6 +229,22 @@ namespace Seiro.GPUVerlet.Core.Converters
 			{
 				sum += src[i].Value.Count;
 				dst[i] = sum;
+			}
+
+			return dst;
+		}
+
+		/// <summary>
+		/// マテリアルごとの要素数を数え上げる
+		/// </summary>
+		/// <param name="src"></param>
+		/// <returns></returns>
+		static uint[] CalcCountEachMaterials(List<KeyValuePair<UnityEngine.Material, List<int>>> src)
+		{
+			var dst = new uint[src.Count];
+			for (var i = 0; i < src.Count; ++i)
+			{
+				dst[i] = (uint)src[i].Value.Count;
 			}
 
 			return dst;

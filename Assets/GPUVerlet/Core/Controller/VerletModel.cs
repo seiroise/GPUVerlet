@@ -17,7 +17,11 @@ namespace Seiro.GPUVerlet.Core.Controller
 		/// <param name="s"></param>
 		public void SetStructure(CompiledStructure s)
 		{
-			
+			var coms = GetComponents<BaseVerletComponent>();
+			for (var i = 0; i < coms.Length; ++i)
+			{
+				coms[i].SetStructure(s);
+			}
 		}
 
 		#endregion

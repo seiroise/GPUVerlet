@@ -1,14 +1,18 @@
-﻿Shader "Unlit/Edge-Additive"
+﻿Shader "Unlit/Particle_Offseted"
 {
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
+		[Enum(UnityEngine.Rendering.BlendMode)]_BlendSrc ("Blend Src", Float) = 0
+		[Enum(UnityEngine.Rendering.BlendMode)]_BlendDst ("Blend Dst", Float) = 0
+		
+		[HideInInspector]_Offset("Offset", Int) = 0
 	}
 	SubShader
 	{
 		Tags
 		{
-			"Queue"="Transparent-10"	
+			"Queue"="Transparent"
 			"IgnoreProjection"="True"
 			"RenderType"="Transparent"
 		}
@@ -17,7 +21,7 @@
 		Lighting Off
 		ZWrite Off
 		// Blend SrcAlpha OneMinusSrcAlpha
-		Blend SrcAlpha One
+		Blend [_BlendSrc] [_BlendDst]
 
 		Pass
 		{
@@ -44,10 +48,11 @@
 			};
 
 			StructuredBuffer<ParticleData> _ParticleDataBuffer;
-			StructuredBuffer<EdgeData> _EdgeDataBuffer;
 
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
+
+			int _Offset;
 			
 			v2f vert (appdata v, uint inst : SV_InstanceID)
 			{
@@ -55,37 +60,18 @@
 
 				UNITY_SETUP_INSTANCE_ID(v);
 
-				EdgeData e = _EdgeDataBuffer[inst];
-				ParticleData pa = _ParticleDataBuffer[e.aID];
-				ParticleData pb = _ParticleDataBuffer[e.bID];
+				ParticleData p = _ParticleDataBuffer[inst + _Offset];
+				float scl = p.size;
 
-				float2 delta = pa.position - pb.position;
-				float len = length(delta);
-
-				// 拡縮
-				float2x2 scl = (float2x2)0;
-				scl._11_22 = float2(len, e.width);
-				v.vertex.xy = mul(scl, v.vertex.xy);
-
-				// 回転
-				float2x2 rot = (float2x2)0;
-				float2 nDelta = normalize(delta);
-				float rad = atan2(nDelta.y, nDelta.x);
-				float tc = cos(rad);
-				float ts = sin(rad);
-				rot._11 = tc;
-				rot._12 = -ts;
-				rot._21 = ts;
-				rot._22 = tc;
-				v.vertex.xy = mul(rot, v.vertex.xy);
-
-				// 移動
-				float2 mid = (pa.position + pb.position) * 0.5;
-				v.vertex.xy += mid;
+				// スケーリングと平行移動
+				float4x4 mat = (float4x4)0;
+				mat._11_22_33_44 = float4(scl, scl, scl, 0);
+				mat._14_24 += p.position;
+				v.vertex = mul(mat, v.vertex);
 
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-				o.color = e.color;
+				o.color = p.color;
 				return o;
 			}
 			

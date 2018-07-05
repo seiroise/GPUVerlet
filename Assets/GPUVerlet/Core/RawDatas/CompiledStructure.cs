@@ -19,10 +19,14 @@ namespace Seiro.GPUVerlet.Core.RawDatas
 		public int[] particleMaterialOffsets;
 		public int[] edgeMaterialOffsets;
 
+		public uint[] particleCounts;
+		public uint[] edgeCounts;
+
 		public CompiledStructure(
 			Particle[] particles, Edge[] edges,
 			Material[] particleMaterials, Material[] edgeMaterials,
-			int[] particleMaterialOffsets, int[] edgeMaterialOffsets
+			int[] particleMaterialOffsets, int[] edgeMaterialOffsets,
+			uint[] particleCounts, uint[] edgeCounts
 		) {
 			this.particles = particles;
 			this.edges = edges;
@@ -30,6 +34,8 @@ namespace Seiro.GPUVerlet.Core.RawDatas
 			this.edgeMaterials = edgeMaterials;
 			this.particleMaterialOffsets = particleMaterialOffsets;
 			this.edgeMaterialOffsets = edgeMaterialOffsets;
+			this.particleCounts = particleCounts;
+			this.edgeCounts = edgeCounts;
 		}
     }
 }
