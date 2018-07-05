@@ -121,8 +121,8 @@ namespace Seiro.GPUVerlet.Core.Controller
 			for (var i = 0; i < counts.Length; ++i)
 			{
 				_args[1] = counts[i];
-				_particleArgsBuffers[i] = new ComputeBuffer(1, _args.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
-				_particleArgsBuffers[i].SetData(_args);
+				buffers[i] = new ComputeBuffer(1, _args.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
+				buffers[i].SetData(_args);
 			}
 			return buffers;
 		}

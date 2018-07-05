@@ -1,4 +1,5 @@
-﻿using Seiro.GPUVerlet.Core;
+﻿
+using Seiro.GPUVerlet.Core.Compiler;
 using Seiro.GPUVerlet.Core.Controller;
 using Seiro.GPUVerlet.Core.RefDatas;
 using System.Collections;
@@ -15,26 +16,21 @@ namespace Seiro.GPUVerlet.Demo
 	{
 		public VerletSimulator vSimulator;
 		public VerletRenderer vRenderer;
-		public MaterialDictionary materialDictionary;
+		public MaterialDictionary materialDict;
+		public Core.Architect.BaseArchitect architect;
 
 		private void Start()
 		{
-			
+			var normal = architect.Build();
+			var compiled = StructureCompiler.Compile(normal, materialDict);
+			vSimulator.SetStructure(compiled);
+			vRenderer.SetStructure(compiled);
 		}
 
 		private void Update()
 		{
 			vSimulator.Simulate();
 			vRenderer.Render();
-		}
-
-		RefStructure Build()
-		{
-			var s = new RefStructure();
-
-
-
-			return s;
 		}
 	}
 }

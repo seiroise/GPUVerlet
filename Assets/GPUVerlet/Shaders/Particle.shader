@@ -5,7 +5,6 @@
 		_MainTex ("Texture", 2D) = "white" {}
 		[Enum(UnityEngine.Rendering.BlendMode)]_BlendSrc ("Blend Src", Float) = 0
 		[Enum(UnityEngine.Rendering.BlendMode)]_BlendDst ("Blend Dst", Float) = 0
-		_Queue ("Queue", Int) = 0
 	}
 	SubShader
 	{

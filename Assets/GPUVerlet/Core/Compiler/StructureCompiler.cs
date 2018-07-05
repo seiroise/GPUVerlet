@@ -4,13 +4,13 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Seiro.GPUVerlet.Core.Converters
+namespace Seiro.GPUVerlet.Core.Compiler
 {
 
 	/// <summary>
 	/// 構造体を実際に使用できる状態に仕上げる
 	/// </summary>
-	public static class StructureConverter
+	public static class StructureCompiler
 	{
 
 		#region 外部インタフェース
@@ -227,7 +227,7 @@ namespace Seiro.GPUVerlet.Core.Converters
 			var sum = 0;
 			for (var i = 1; i < src.Count; ++i)
 			{
-				sum += src[i].Value.Count;
+				sum += src[i-1].Value.Count;
 				dst[i] = sum;
 			}
 
