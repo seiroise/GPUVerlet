@@ -78,7 +78,8 @@ namespace Seiro.GPUVerlet.Core.Controller
 		/// <param name="position"></param>
 		public void SetParticlePosition(int idx, Vector2 position)
 		{
-			_particles[idx].position = _particles[idx].oldPosition = position;
+			// _particles[idx].position = _particles[idx].oldPosition = position;
+			_particles[idx].position = position;
 		}
 
         #endregion

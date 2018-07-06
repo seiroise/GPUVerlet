@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51962c1d76b090e4c98a0cfbf15f1453, type: 3}
+  m_Name: MaterialDictionary
+  m_EditorClassIdentifier: 
+  _items:
+  - id: Particle
+    material: {fileID: 2100000, guid: 61fc6943e198fda448848c2a5ef26974, type: 2}
+  - id: Edge
+    material: {fileID: 2100000, guid: f37bc4c153a735a41991aa3e9dc0a191, type: 2}
+  - id: Leaf
+    material: {fileID: 2100000, guid: e3da64381a385454baee2905d3137b29, type: 2}

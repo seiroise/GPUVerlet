@@ -100,6 +100,33 @@ namespace Seiro.GPUVerlet.Core.Controller
 			RenderInstancedMesh();
 		}
 
+		/// <summary>
+		/// バッファを解放する
+		/// </summary>
+		public void ReleaseAllBuffers()
+		{
+			if (_particleBuffer != null)
+			{
+				_particleBuffer.Release();
+				_particleBuffer = null;
+			}
+			if (_edgeBuffer != null)
+			{
+				_edgeBuffer.Release();
+				_edgeBuffer = null;
+			}
+			if (_particleArgsBuffers != null)
+			{
+				ReleaseBufferArray(_particleArgsBuffers);
+				_particleArgsBuffers = null;
+			}
+			if (_edgeArgsBuffers != null)
+			{
+				ReleaseBufferArray(_edgeArgsBuffers);
+				_edgeArgsBuffers = null;
+			}
+		}
+
 		#endregion
 
 		#region 内部処理
@@ -154,33 +181,6 @@ namespace Seiro.GPUVerlet.Core.Controller
 				blocks[i] = new MaterialPropertyBlock();
 			}
 			return blocks;
-		}
-
-		/// <summary>
-		/// バッファを解放する
-		/// </summary>
-		void ReleaseAllBuffers()
-		{
-			if (_particleBuffer != null)
-			{
-				_particleBuffer.Release();
-				_particleBuffer = null;
-			}
-			if (_edgeBuffer != null)
-			{
-				_edgeBuffer.Release();
-				_edgeBuffer = null;
-			}
-			if (_particleArgsBuffers != null)
-			{
-				ReleaseBufferArray(_particleArgsBuffers);
-				_particleArgsBuffers = null;
-			}
-			if (_edgeArgsBuffers != null)
-			{
-				ReleaseBufferArray(_edgeArgsBuffers);
-				_edgeArgsBuffers = null;
-			}
 		}
 
 		/// <summary>

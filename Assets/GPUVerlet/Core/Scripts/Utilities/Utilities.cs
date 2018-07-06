@@ -19,14 +19,13 @@ namespace Seiro.GPUVerlet.Core
 		}
 
 		/// <summary>
-		/// 対象のオブジェクトを配列に変換する
+		/// Gradientからランダムに色を選択する
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="targets"></param>
+		/// <param name="grad"></param>
 		/// <returns></returns>
-		public static T[] CastObjectArray<T>(IEnumerator<T> targets) where T : Object
+		public static Color E_Random(this Gradient grad)
 		{
-			return null;
+			return grad.Evaluate(Random.Range(0f, 1f));
 		}
 	}
 }

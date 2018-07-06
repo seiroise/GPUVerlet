@@ -4,13 +4,14 @@ using UnityEngine.Assertions;
 
 namespace Seiro.GPUVerlet.Core.Controller
 {
-	
+
 	/// <summary>
 	/// Verletを動かすためのモデル
 	/// </summary>
 	[RequireComponent(typeof(VerletRenderer), typeof(VerletSimulator))]
 	[ExecuteInEditMode]
-	public class VerletModel : MonoBehaviour {
+	public class VerletModel : MonoBehaviour
+	{
 
 		[SerializeField]
 		CompiledStructure _structure;
@@ -33,12 +34,8 @@ namespace Seiro.GPUVerlet.Core.Controller
 
 		private void Update()
 		{
-			if(_renderer.IsReady()) _renderer.Render();
-		}
-
-		private void FixedUpdate()
-		{
-			if(_simulator.IsReady()) _simulator.Simulate();
+			if (_renderer && _renderer.IsReady()) _renderer.Render();
+			if (_simulator && _simulator.IsReady()) _simulator.Simulate();
 		}
 
 		#endregion
