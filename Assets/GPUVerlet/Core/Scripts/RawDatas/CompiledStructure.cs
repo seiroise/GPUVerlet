@@ -7,7 +7,8 @@ namespace Seiro.GPUVerlet.Core.RawDatas
     /// <summary>
     /// コンパイルされた構造体
     /// </summary>
-    public sealed class CompiledStructure
+	[System.Serializable]
+    public sealed class CompiledStructure : ScriptableObject
     {
 
 		public Particle[] particles;
@@ -22,7 +23,18 @@ namespace Seiro.GPUVerlet.Core.RawDatas
 		public uint[] particleCounts;
 		public uint[] edgeCounts;
 
-		public CompiledStructure(
+		/// <summary>
+		/// それぞれのデータを設定する
+		/// </summary>
+		/// <param name="particles"></param>
+		/// <param name="edges"></param>
+		/// <param name="particleMaterials"></param>
+		/// <param name="edgeMaterials"></param>
+		/// <param name="particleMaterialOffsets"></param>
+		/// <param name="edgeMaterialOffsets"></param>
+		/// <param name="particleCounts"></param>
+		/// <param name="edgeCounts"></param>
+		public void SetDatas(
 			Particle[] particles, Edge[] edges,
 			Material[] particleMaterials, Material[] edgeMaterials,
 			int[] particleMaterialOffsets, int[] edgeMaterialOffsets,

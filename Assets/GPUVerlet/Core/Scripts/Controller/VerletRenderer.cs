@@ -50,14 +50,28 @@ namespace Seiro.GPUVerlet.Core.Controller
 
 		#region MonoBehaviourイベント
 
+		private void Awake()
+		{
+			ReleaseAllBuffers();
+		}
+
 		private void OnDestroy()
 		{
-			ReleaseBuffer();
+			ReleaseAllBuffers();
 		}
 
 		#endregion
 
 		#region 外部インタフェース
+
+		/// <summary>
+		/// 準備できているか
+		/// </summary>
+		/// <returns></returns>
+		public override bool IsReady()
+		{
+			return _particles != null && _edges != null && _particleBuffer != null && _edgeBuffer != null;
+		}
 
 		/// <summary>
 		/// 構造体を設定する
@@ -75,7 +89,7 @@ namespace Seiro.GPUVerlet.Core.Controller
 			_edgeOffsets = s.edgeMaterialOffsets;
 			_edgeCounts = s.edgeCounts;
 
-			BindBuffer();
+			BindEmptyBuffer();
 		}
 
 		/// <summary>
@@ -93,9 +107,9 @@ namespace Seiro.GPUVerlet.Core.Controller
 		/// <summary>
 		/// 空バッファをバインドする
 		/// </summary>
-		void BindBuffer()
+		void BindEmptyBuffer()
 		{
-			ReleaseBuffer();
+			ReleaseAllBuffers();
 
 			_particleBuffer = new ComputeBuffer(_particles.Length, Marshal.SizeOf(typeof(RawDatas.Particle)));
 			_edgeBuffer = new ComputeBuffer(_edges.Length, Marshal.SizeOf(typeof(Edge)));
@@ -145,7 +159,7 @@ namespace Seiro.GPUVerlet.Core.Controller
 		/// <summary>
 		/// バッファを解放する
 		/// </summary>
-		void ReleaseBuffer()
+		void ReleaseAllBuffers()
 		{
 			if (_particleBuffer != null)
 			{
@@ -160,10 +174,12 @@ namespace Seiro.GPUVerlet.Core.Controller
 			if (_particleArgsBuffers != null)
 			{
 				ReleaseBufferArray(_particleArgsBuffers);
+				_particleArgsBuffers = null;
 			}
 			if (_edgeArgsBuffers != null)
 			{
 				ReleaseBufferArray(_edgeArgsBuffers);
+				_edgeArgsBuffers = null;
 			}
 		}
 
@@ -178,7 +194,6 @@ namespace Seiro.GPUVerlet.Core.Controller
 				buffers[i].Release();
 				buffers[i] = null;
 			}
-			buffers = null;
 		}
 
 		/// <summary>

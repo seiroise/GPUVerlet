@@ -4,7 +4,7 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Seiro.GPUVerlet.Core.Compiler
+namespace Seiro.GPUVerlet.Core.Compilers
 {
 
 	/// <summary>
@@ -51,7 +51,11 @@ namespace Seiro.GPUVerlet.Core.Compiler
 			var particleCounts = CalcCountEachMaterials(particleMaterialList);
 			var edgeCounts = CalcCountEachMaterials(edgeMaterialList);
 
-			return new CompiledStructure(particles, edges, particleMaterials, edgeMaterials, particleOffsets, edgeOffsets, particleCounts, edgeCounts);
+			// インスタンスを生成してデータを設定
+			var compiled = UnityEngine.ScriptableObject.CreateInstance<CompiledStructure>();
+			compiled.SetDatas(particles, edges, particleMaterials, edgeMaterials, particleOffsets, edgeOffsets, particleCounts, edgeCounts);
+
+			return compiled;
 		}
 
 		#endregion

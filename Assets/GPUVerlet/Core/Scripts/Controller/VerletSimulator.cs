@@ -22,13 +22,22 @@ namespace Seiro.GPUVerlet.Core.Controller
         RawDatas.Particle[] _particles;
         Edge[] _edges;
 
-        #region 外部インタフェース
+		#region 外部インタフェース
 
-        /// <summary>
-        /// 構造体を設定する
-        /// </summary>
-        /// <param name="s"></param>
-        public override void SetStructure(CompiledStructure s)
+		/// <summary>
+		/// 準備できているか
+		/// </summary>
+		/// <returns></returns>
+		public override bool IsReady()
+		{
+			return _particles != null && _edges != null;
+		}
+
+		/// <summary>
+		/// 構造体を設定する
+		/// </summary>
+		/// <param name="s"></param>
+		public override void SetStructure(CompiledStructure s)
         {
             _particles = s.particles;
             _edges = s.edges;
@@ -42,6 +51,35 @@ namespace Seiro.GPUVerlet.Core.Controller
             StepParticles();
             SolveEdges();
         }
+
+		/// <summary>
+		/// パーティクル数を返す
+		/// </summary>
+		/// <returns></returns>
+		public int GetParticleCount()
+		{
+			return _particles.Length;
+		}
+
+		/// <summary>
+		/// パーティクルの座標を返す
+		/// </summary>
+		/// <param name="idx"></param>
+		/// <returns></returns>
+		public Vector2 GetParticlePosition(int idx)
+		{
+			return _particles[idx].position;
+		}
+
+		/// <summary>
+		/// パーティクルの座標を設定する
+		/// </summary>
+		/// <param name="idx"></param>
+		/// <param name="position"></param>
+		public void SetParticlePosition(int idx, Vector2 position)
+		{
+			_particles[idx].position = _particles[idx].oldPosition = position;
+		}
 
         #endregion
 
@@ -143,6 +181,8 @@ namespace Seiro.GPUVerlet.Core.Controller
         {
             public override void OnInspectorGUI()
             {
+				base.OnInspectorGUI();
+
                 var selves = new VerletSimulator[targets.Length];
                 for (var i = 0; i < targets.Length; ++i)
                 {
@@ -152,12 +192,12 @@ namespace Seiro.GPUVerlet.Core.Controller
                 var particleSum = 0;
                 for (var i = 0; i < selves.Length; ++i)
                 {
-                    particleSum += selves[i]._particles.Length;
+                    particleSum += selves[i]._particles != null ? selves[i]._particles.Length : 0;
                 }
                 var edgeSum = 0;
                 for (var i = 0; i < selves.Length; ++i)
                 {
-                    edgeSum += selves[i]._edges.Length;
+                    edgeSum += selves[i]._edges != null ? selves[i]._edges.Length : 0;
                 }
 
                 EditorGUILayout.BeginVertical("box");

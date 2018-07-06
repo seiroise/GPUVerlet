@@ -105,10 +105,10 @@ namespace Seiro.GPUVerlet.Core.Architect
 
         public override RefStructure Build(Matrix4x4 toWorld)
         {
-            var s = new RefStructure();
+            var s = RefStructure.CreateNew();
 
             var origin = s.AddParticle(Vector2.zero, _branchJointSize, RandomGradient(_leafColor), _branchJointMaterialID);
-            var next = MakeBranch(s, _maxBranchDepth, origin, 90f, _basebranchLength);
+            /*var next = */MakeBranch(s, _maxBranchDepth, origin, 90f, _basebranchLength);
 
             s.TranslateParticles(toWorld);
 
@@ -138,6 +138,11 @@ namespace Seiro.GPUVerlet.Core.Architect
                 MakeBranch(s, depth, current, angle + deltaAngle, length * _branchDamping);
 
                 s.AddEdge(parent, current, _branchWidth, RandomGradient(_branchColor), _branchMaterialID);
+
+				if (Random.Range(0f, 1f) > 0.5f)
+				{
+					MakeBranch(s, depth, current, angle + Random.Range(-60f, 60f), length * _branchDamping);
+				}
 
                 return current;
             }

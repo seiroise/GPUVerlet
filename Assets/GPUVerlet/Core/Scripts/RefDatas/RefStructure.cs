@@ -15,11 +15,19 @@ namespace Seiro.GPUVerlet.Core.RefDatas
         List<RefEdge> _edges;
         uint _uidCounter = 0;
 
-        public RefStructure()
+		#region static 外部インタフェース
+
+		public static RefStructure CreateNew()
         {
-            _particles = new List<RefParticle>();
-            _edges = new List<RefEdge>();
+			var s = CreateInstance<RefStructure>();
+
+            s._particles = new List<RefParticle>();
+            s._edges = new List<RefEdge>();
+
+			return s;
         }
+
+		#endregion
 
         #region 外部インタフェース
 

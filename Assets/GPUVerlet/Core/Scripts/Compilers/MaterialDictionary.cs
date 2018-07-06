@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Seiro.GPUVerlet.Core.Compiler
+namespace Seiro.GPUVerlet.Core.Compilers
 {
 	
 	/// <summary>
