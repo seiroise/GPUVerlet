@@ -4,20 +4,20 @@ using UnityEngine;
 namespace Seiro.GPUVerlet.Core.Architect
 {
 
-	/// <summary>
-	/// 基底の建築士
-	/// </summary>
-	public class BaseArchitect : ScriptableObject
-	{
+    /// <summary>
+    /// 基底の建築士
+    /// </summary>
+    public class BaseArchitect : ScriptableObject
+    {
 
-		#region 仮想インタフェース
+        #region 仮想インタフェース
 
-		/// <summary>
-		/// 構造体を作成する
-		/// </summary>
-		/// <returns></returns>
-		public virtual RefStructure Build() { return null; }
+        /// <summary>
+        /// 構造体を作成する
+        /// </summary>
+        /// <returns></returns>
+        public virtual RefStructure Build(Matrix4x4 toWorld) { return null; }
 
-		#endregion
-	}
+        #endregion
+    }
 }

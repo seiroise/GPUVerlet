@@ -9,28 +9,28 @@ using UnityEngine;
 namespace Seiro.GPUVerlet.Demo
 {
 
-	/// <summary>
-	/// MultiMaterialのテスター
-	/// </summary>
-	public class VerletTester : MonoBehaviour
-	{
-		public VerletSimulator vSimulator;
-		public VerletRenderer vRenderer;
-		public MaterialDictionary materialDict;
-		public Core.Architect.BaseArchitect architect;
+    /// <summary>
+    /// MultiMaterialのテスター
+    /// </summary>
+    public class VerletTester : MonoBehaviour
+    {
+        public VerletSimulator vSimulator;
+        public VerletRenderer vRenderer;
+        public MaterialDictionary materialDict;
+        public Core.Architect.BaseArchitect architect;
 
-		private void Start()
-		{
-			var normal = architect.Build();
-			var compiled = StructureCompiler.Compile(normal, materialDict);
-			vSimulator.SetStructure(compiled);
-			vRenderer.SetStructure(compiled);
-		}
+        private void Start()
+        {
+            var normal = architect.Build(transform.localToWorldMatrix);
+            var compiled = StructureCompiler.Compile(normal, materialDict);
+            vSimulator.SetStructure(compiled);
+            vRenderer.SetStructure(compiled);
+        }
 
-		private void Update()
-		{
-			vSimulator.Simulate();
-			vRenderer.Render();
-		}
-	}
+        private void Update()
+        {
+            vSimulator.Simulate();
+            vRenderer.Render();
+        }
+    }
 }

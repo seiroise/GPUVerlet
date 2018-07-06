@@ -65,7 +65,7 @@
 				ParticleData pa = _ParticleDataBuffer[e.aID];
 				ParticleData pb = _ParticleDataBuffer[e.bID];
 
-				float2 delta = pa.position - pb.position;
+				float2 delta = pb.position - pa.position;
 				float len = length(delta);
 
 				// 拡縮
