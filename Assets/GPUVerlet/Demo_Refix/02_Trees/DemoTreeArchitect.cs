@@ -15,19 +15,19 @@ namespace Seiro.GPUVerlet.Demo
 
 		[Header("幹の基本設定")]
 
-		[Tooltip("幹の最大深度"), SerializeField, MinMax(0f, 10f)]
+		[SerializeField, MinMax(0f, 10f)]
 		MinMax _maxDepth = new MinMax(3f, 6f);
 
 		[Tooltip("幹の基本長"), SerializeField, MinMax(0f, 10f)]
 		MinMax _baseBranchLength = new MinMax(4f, 5f);
 
-		[Tooltip("幹のエッジを作るビルダー"), SerializeField]
+		[Tooltip("幹のエッジを作るビルダー"), SerializeField, FlatRef(offset = 8)]
 		BaseEdgeBuilder _branchEdgeBuilder = null;
 
-		[Tooltip("幹のサポートエッジを作るビルダー"), SerializeField]
+		[Tooltip("幹のサポートエッジを作るビルダー"), SerializeField, FlatRef(offset = 8)]
 		BaseEdgeBuilder _branchSupportEdgeBuilder = null;
 
-		[Tooltip("幹のパーティクルを作るビルダー"), SerializeField]
+		[Tooltip("幹のパーティクルを作るビルダー"), SerializeField, FlatRef(offset = 8)]
 		BaseParticleBuilder _branchParticleBuilder = null;
 
 		[Header("枝の分岐設定")]
@@ -49,7 +49,7 @@ namespace Seiro.GPUVerlet.Demo
 		[Tooltip("葉の長さ"), SerializeField, MinMax(0f, 10f)]
 		MinMax _leafLength = new MinMax(1f, 2f);
 
-		[Tooltip("葉のエッジを作るビルダー"), SerializeField]
+		[Tooltip("葉のエッジを作るビルダー"), SerializeField, FlatRef(offset = 8)]
 		BaseEdgeBuilder _leafEdgeBuilder = null;
 
 		float _tempBaseBranchLength = 0f;

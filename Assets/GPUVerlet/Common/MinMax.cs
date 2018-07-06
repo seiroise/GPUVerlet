@@ -64,7 +64,7 @@ namespace Seiro.GPUVerlet.Common
 						GUI.Box(bgRect, GUIContent.none);
 
 						// ラベル
-						EditorGUI.PrefixLabel(labelRect, label);
+						EditorGUI.PrefixLabel(labelRect, GUIUtility.GetControlID(FocusType.Passive), label);
 
 						//プロパティの取得
 						SerializedProperty minProp = property.FindPropertyRelative("_min");

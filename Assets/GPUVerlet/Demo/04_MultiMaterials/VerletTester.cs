@@ -4,6 +4,7 @@ using Seiro.GPUVerlet.Core.RefDatas;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Seiro.GPUVerlet.Common;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -21,6 +22,8 @@ namespace Seiro.GPUVerlet.Demo
 		public bool autoBuildAndAssign = true;
 		public VerletModel model;
 		public MaterialDictionary materialDict;
+
+		[FlatRef(offset = 8)]
 		public Core.Architect.BaseArchitect architect;
 
 		private void Start()
