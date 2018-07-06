@@ -21,7 +21,7 @@ namespace Seiro.GPUVerlet.Core.Interactions
 		[SerializeField, Range(0f, 5f)]
 		float _pickRadius = 0.5f;
 
-		int _overlappedIdx;
+		int _overlappedIdx = - 1;
 
 		#region MonoBehaviourイベント
 

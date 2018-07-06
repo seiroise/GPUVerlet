@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d934b07c33de4a4aa37d00e9337786e, type: 3}
   m_Name: TreeArchitect
   m_EditorClassIdentifier: 
-  _maxBranchDepth: 20
+  _maxBranchDepth: 15
   _basebranchLength: 1
   _branchWidth: 0.05
   _branchAngleDeltaFactor: 5
