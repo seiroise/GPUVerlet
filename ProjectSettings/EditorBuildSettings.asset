@@ -6,11 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/GPUVerlet/Demo/03_SimpleConifer/03-SimpleConifer.unity
-    guid: a6e721341890e4068aae710218678700
-  - enabled: 1
-    path: Assets/GPUVerlet/Demo/02_Trees/02-Trees.unity
+    path: Assets/GPUVerlet/Demo_Refix/02_Trees/02_Trees.unity
+    guid: 1c7a3c10db81348dab5e9e51e58c8313
+  - enabled: 0
+    path: Assets/GPUVerlet/Demo/02_Tree1/02-Tree1.unity
     guid: ecffc79c7ed73477c8ad21a1a6f00ff2
-  - enabled: 1
-    path: Assets/GPUParticle/GPUParticle.unity
-    guid: c86ce9f1a2e6340d3bf1495f7fb070bf

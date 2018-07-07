@@ -8,7 +8,7 @@ namespace Seiro.GPUVerlet.Demo
     /// <summary>
     /// 円形の構造物の建築士
     /// </summary>
-	[CreateAssetMenu(fileName = "CircleArchitect", menuName = "Seiro/GPUVerlet/CircleArchitect")]
+	// [CreateAssetMenu(fileName = "CircleArchitect", menuName = "Seiro/GPUVerlet/CircleArchitect")]
     public class CircleArchitect : BaseArchitect
     {
 

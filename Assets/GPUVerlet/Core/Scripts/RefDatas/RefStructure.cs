@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Seiro.GPUVerlet.Core.RefDatas
 {
@@ -15,19 +16,19 @@ namespace Seiro.GPUVerlet.Core.RefDatas
         List<RefEdge> _edges;
         uint _uidCounter = 0;
 
-		#region static 外部インタフェース
+        #region static 外部インタフェース
 
-		public static RefStructure CreateNew()
+        public static RefStructure CreateNew()
         {
-			var s = CreateInstance<RefStructure>();
+            var s = CreateInstance<RefStructure>();
 
             s._particles = new List<RefParticle>();
             s._edges = new List<RefEdge>();
 
-			return s;
+            return s;
         }
 
-		#endregion
+        #endregion
 
         #region 外部インタフェース
 
@@ -47,7 +48,7 @@ namespace Seiro.GPUVerlet.Core.RefDatas
         }
 
         /// <summary>
-        /// エッジを追加する
+        /// パーティクル参照を元にエッジを追加する
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
@@ -57,7 +58,26 @@ namespace Seiro.GPUVerlet.Core.RefDatas
         /// <returns></returns>
         public RefEdge AddEdge(RefParticle a, RefParticle b, float width, Color color, string materialID)
         {
+            Assert.IsNotNull(a);
+            Assert.IsNotNull(b);
+
             var e = new RefEdge(GetNextUID(), a.uid, b.uid, width, color, materialID);
+            _edges.Add(e);
+            return e;
+        }
+
+        /// <summary>
+        /// パーティクル番号を元にエッジを追加する
+        /// </summary>
+        /// <param name="aIdx"></param>
+        /// <param name="bIdx"></param>
+        /// <param name="width"></param>
+        /// <param name="color"></param>
+        /// <param name="materialID"></param>
+        /// <returns></returns>
+        public RefEdge AddEdge(int aIdx, int bIdx, float width, Color color, string materialID)
+        {
+            var e = new RefEdge(GetNextUID(), GetParticleAt(aIdx).uid, GetParticleAt(bIdx).uid, width, color, materialID);
             _edges.Add(e);
             return e;
         }
@@ -99,7 +119,7 @@ namespace Seiro.GPUVerlet.Core.RefDatas
         #region 内部処理
 
         /// <summary>
-        /// UIDからパーティクルを検索する
+        /// UIDからパーティクルを検索し、返す
         /// </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
@@ -113,6 +133,28 @@ namespace Seiro.GPUVerlet.Core.RefDatas
                 }
             }
             return null;
+        }
+
+        /// <summary>
+        /// パーティクル番号からパーティクルを返す
+        /// </summary>
+        /// <param name="idx"></param>
+        /// <returns></returns>
+        RefParticle GetParticleAt(int idx)
+        {
+            Assert.IsTrue(ContainsParticlesIdx(idx));
+
+            return _particles[idx];
+        }
+
+        /// <summary>
+        /// パーティクルインデックスのはみ出し確認
+        /// </summary>
+        /// <param name="idx"></param>
+        /// <returns></returns>
+        bool ContainsParticlesIdx(int idx)
+        {
+            return 0 <= idx && idx < _particles.Count;
         }
 
         /// <summary>

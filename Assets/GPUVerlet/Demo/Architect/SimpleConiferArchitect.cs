@@ -6,7 +6,7 @@ namespace Seiro.GPUVerlet.Demo
     /// <summary>
     /// シンプルな針葉樹っぽい何かの建築士
     /// </summary>
-	[CreateAssetMenu(fileName = "SimpleConiferArchitect", menuName = "Seiro/GPUVerlet/SimpleConiferArchitect")]
+	// [CreateAssetMenu(fileName = "SimpleConiferArchitect", menuName = "Seiro/GPUVerlet/SimpleConiferArchitect")]
     public class SimpleConiferArchitect : BaseArchitect
     {
 

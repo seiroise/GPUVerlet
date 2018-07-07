@@ -8,7 +8,7 @@ namespace Seiro.GPUVerlet.Demo
     /// <summary>
     /// 二分木の建築士
     /// </summary>
-	[CreateAssetMenu(fileName = "TreeArchitect", menuName = "Seiro/GPUVerlet/TreeArchitect")]
+	// [CreateAssetMenu(fileName = "TreeArchitect", menuName = "Seiro/GPUVerlet/TreeArchitect")]
     public class TreeArchitect : BaseArchitect
     {
 
