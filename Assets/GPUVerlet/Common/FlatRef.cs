@@ -61,7 +61,7 @@ namespace Seiro.GPUVerlet.Common
                         attr.hold = EditorGUI.Foldout(valRect, attr.hold, GUIContent.none);
                     }
 
-                    if (attr.hold && property.objectReferenceValue)
+                    if (!attr.hold && property.objectReferenceValue)
                     {
                         // 表示部分は矩形内に表示する
                         var boxRect = position.E_Add(0f, EditorGUIUtility.singleLineHeight + padding, 0f, 0f);
@@ -94,7 +94,7 @@ namespace Seiro.GPUVerlet.Common
                 var height = EditorGUIUtility.singleLineHeight;
 
                 var attr = attribute as FlatRefAttribute;
-                if (attr.hold && property.propertyType == SerializedPropertyType.ObjectReference && property.objectReferenceValue)
+                if (!attr.hold && property.propertyType == SerializedPropertyType.ObjectReference && property.objectReferenceValue)
                 {
                     height += padding * 3f;
                     height += MyEditorUtility.GetDrawHeight(property.objectReferenceValue, attr.offset);

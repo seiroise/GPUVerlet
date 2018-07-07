@@ -39,7 +39,7 @@ namespace Seiro.GPUVerlet.Core.Mixers
 
             for (var i = 0; i < aParticles.Length; ++i)
             {
-                var t = aParticles[0];
+                var t = aParticles[i];
                 var neighbours = FindParticles(t, dist, bParticles);
                 pairDict.Add(t, neighbours);
             }

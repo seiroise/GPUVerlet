@@ -17,4 +17,4 @@ MonoBehaviour:
   _edgeBuilder: {fileID: 11400000, guid: 2ead331facb7f48e38e811e7bf72799e, type: 2}
   _supportEdgeBuilder: {fileID: 11400000, guid: 14668370e638249ef8eef50c40fe2f21,
     type: 2}
-  _supportIntervals: 
+  _supportIntervals: 14000000

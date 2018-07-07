@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Name: DemoTree
   m_EditorClassIdentifier: 
   _maxDepth:
-    _min: 2
-    _max: 2
+    _min: 5
+    _max: 5
   _baseBranchLength:
-    _min: 0.01
-    _max: 1.5772728
+    _min: 3
+    _max: 4
   _branchEdgeBuilder: {fileID: 11400000, guid: 2114803a5724a46bab5fa2e092bf76b3, type: 2}
   _branchSupportEdgeBuilder: {fileID: 11400000, guid: 8baf2c814a51c4240991f8d33222b057,
     type: 2}

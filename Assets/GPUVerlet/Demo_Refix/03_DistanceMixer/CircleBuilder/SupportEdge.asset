@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: SupportEdge
   m_EditorClassIdentifier: 
   _width:
-    _min: 0.01
-    _max: 0.01
+    _min: 0.02
+    _max: 0.02
   _color:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}

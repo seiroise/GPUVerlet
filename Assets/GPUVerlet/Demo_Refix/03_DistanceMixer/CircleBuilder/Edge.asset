@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: Edge
   m_EditorClassIdentifier: 
   _width:
-    _min: 0.1
-    _max: 0.1
+    _min: 0.2
+    _max: 0.2
   _color:
     serializedVersion: 2
     key0: {r: 0.9485294, g: 0.9485294, b: 0.9485294, a: 0.5019608}
