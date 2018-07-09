@@ -10,7 +10,7 @@ namespace Seiro.GPUVerlet.Core.RefDatas
     /// 参照の構造体
     /// </summary>
     [CreateAssetMenu(menuName = "Seiro/GPUVerlet/RefStructure", fileName = "RefStructure")]
-    public class RefStructure : ScriptableObject
+    public partial class RefStructure : ScriptableObject
     {
 
         [SerializeField, HideInInspector]
