@@ -3,6 +3,9 @@
 namespace Seiro.GPUVerlet.Core.RefDatas
 {
 
+	/// <summary>
+	/// こっちはどちらかというとヘルパー的な関数軍
+	/// </summary>
     public partial class RefStructure : ScriptableObject
     {
 
@@ -57,5 +60,23 @@ namespace Seiro.GPUVerlet.Core.RefDatas
 
             return nearestHitten;
         }
+
+		/// <summary>
+		/// 簡易的なプレビューをGizmos上に描画する
+		/// </summary>
+		/// <param name="s"></param>
+		public static void DrawSimplePreviewOnGizmos(RefStructure s)
+		{
+			for (var i = 0; i < s._particles.Count; ++i)
+			{
+				var t = s._particles[i];
+				Gizmos.DrawWireSphere(t.position, t.size);
+			}
+
+			for (var i = 0; i < s._edges.Count; ++i)
+			{
+				
+			}
+		}
     }
 }
