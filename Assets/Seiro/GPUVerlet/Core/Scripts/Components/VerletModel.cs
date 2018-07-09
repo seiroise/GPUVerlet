@@ -5,60 +5,68 @@ using UnityEngine.Assertions;
 namespace Seiro.GPUVerlet.Core.Components
 {
 
-    /// <summary>
-    /// Verletを動かすためのモデル
-    /// </summary>
-    [RequireComponent(typeof(VerletRenderer), typeof(VerletSimulator))]
-    [ExecuteInEditMode]
-    public class VerletModel : MonoBehaviour
-    {
+	/// <summary>
+	/// Verletを動かすためのモデル
+	/// </summary>
+	[RequireComponent(typeof(VerletRenderer), typeof(VerletSimulator))]
+	[ExecuteInEditMode]
+	public class VerletModel : MonoBehaviour
+	{
 
-        [SerializeField]
-        CompiledStructure _structure;
+		[SerializeField]
+		CompiledStructure _structure;
 
-        [SerializeField]
-        VerletSimulator _simulator;
+		[SerializeField]
+		bool _isSimulated = true;
+		public bool isSimulated { get { return _isSimulated; } set { _isSimulated = value; } }
 
-        [SerializeField]
-        VerletRenderer _renderer;
+		[SerializeField]
+		VerletSimulator _simulator;
 
-        #region MonoBehaviourイベント
+		[SerializeField]
+		bool _isRendered = true;
+		public bool isRendered { get { return _isRendered; } set { _isRendered = value; } }
 
-        private void Start()
-        {
-            if (_structure)
-            {
-                SetStructure(_structure);
-            }
-        }
+		[SerializeField]
+		VerletRenderer _renderer;
 
-        private void Update()
-        {
-            if (_renderer && _renderer.IsReady()) _renderer.Render();
-            if (_simulator && _simulator.IsReady()) _simulator.Simulate();
-        }
+		#region MonoBehaviourイベント
 
-        #endregion
+		private void Start()
+		{
+			if (_structure)
+			{
+				SetStructure(_structure);
+			}
+		}
 
-        #region 外部インタフェース
+		private void Update()
+		{
+			if (_isRendered && _renderer && _renderer.IsReady()) _renderer.Render();
+			if (_isSimulated && _simulator && _simulator.IsReady()) _simulator.Simulate();
+		}
 
-        /// <summary>
-        /// 構造体を設定する
-        /// </summary>
-        /// <param name="s"></param>
-        public void SetStructure(CompiledStructure s)
-        {
-            Assert.IsNotNull(s);
-            Assert.IsNotNull(_simulator);
-            Assert.IsNotNull(_renderer);
+		#endregion
 
-            _structure = s;
+		#region 外部インタフェース
 
-            _simulator.SetStructure(s);
-            _renderer.SetStructure(s);
-        }
+		/// <summary>
+		/// 構造体を設定する
+		/// </summary>
+		/// <param name="s"></param>
+		public void SetStructure(CompiledStructure s)
+		{
+			Assert.IsNotNull(s);
+			Assert.IsNotNull(_simulator);
+			Assert.IsNotNull(_renderer);
 
-        #endregion
+			_structure = s;
 
-    }
+			_simulator.SetStructure(s);
+			_renderer.SetStructure(s);
+		}
+
+		#endregion
+
+	}
 }

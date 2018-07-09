@@ -71,6 +71,8 @@ namespace Seiro.GPUVerlet.Core.RefDatas
             {
                 _edges.Remove(result[i]);
             }
+
+			_particles.Remove(p);
         }
 
         /// <summary>
