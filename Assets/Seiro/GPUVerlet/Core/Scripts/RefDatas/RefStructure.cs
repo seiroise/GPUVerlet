@@ -229,33 +229,33 @@ namespace Seiro.GPUVerlet.Core.RefDatas
             return new Bounds((min + max) * 0.5f, max - min);
         }
 
-        #endregion
+		/// <summary>
+		/// UIDからパーティクルを検索し、返す
+		/// </summary>
+		/// <param name="uid"></param>
+		/// <returns></returns>
+		public RefParticle FindParticleFromUID(uint uid)
+		{
+			for (var i = 0; i < _particles.Count; ++i)
+			{
+				if (_particles[i].uid == uid)
+				{
+					return _particles[i];
+				}
+			}
+			return null;
+		}
 
-        #region 内部処理
+		#endregion
 
-        /// <summary>
-        /// UIDからパーティクルを検索し、返す
-        /// </summary>
-        /// <param name="uid"></param>
-        /// <returns></returns>
-        RefParticle FindParticleFromUID(uint uid)
-        {
-            for (var i = 0; i < _particles.Count; ++i)
-            {
-                if (_particles[i].uid == uid)
-                {
-                    return _particles[i];
-                }
-            }
-            return null;
-        }
+		#region 内部処理
 
-        /// <summary>
-        /// パーティクル番号からパーティクルを返す
-        /// </summary>
-        /// <param name="idx"></param>
-        /// <returns></returns>
-        RefParticle GetParticleAt(int idx)
+		/// <summary>
+		/// パーティクル番号からパーティクルを返す
+		/// </summary>
+		/// <param name="idx"></param>
+		/// <returns></returns>
+		RefParticle GetParticleAt(int idx)
         {
             Assert.IsTrue(ContainsParticlesIdx(idx));
 
@@ -301,6 +301,6 @@ namespace Seiro.GPUVerlet.Core.RefDatas
             return _uidCounter++;
         }
 
-        #endregion
-    }
+		#endregion
+	}
 }

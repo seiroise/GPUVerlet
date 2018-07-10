@@ -16,3 +16,7 @@ MonoBehaviour:
     material: {fileID: 2100000, guid: fa73dfe478ecfe24ab7ecda6bef462e4, type: 2}
   - id: Particle
     material: {fileID: 2100000, guid: 12d7f86599a5d9d449e11569cec65573, type: 2}
+  - id: Edge1
+    material: {fileID: 2100000, guid: 30ebb9716ae6e9945b6fedc1b814cbb5, type: 2}
+  - id: Particle1
+    material: {fileID: 2100000, guid: 138e0ef6998fed948ae3b13cab59286b, type: 2}
