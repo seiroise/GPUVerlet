@@ -8,6 +8,10 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace Seiro.GPUVerlet.Demo
 {
 
@@ -65,6 +69,9 @@ namespace Seiro.GPUVerlet.Demo
 		[SerializeField]
 		ParticlePicker _particlePicker;
 
+		[SerializeField]
+		MonoBehaviour _interactionScript;
+
 		[Header("Left Side Bar")]
 
 		[SerializeField]
@@ -96,6 +103,14 @@ namespace Seiro.GPUVerlet.Demo
 
 		[SerializeField]
 		Toggle _toolMove;
+
+		[Header("Top Data Dock")]
+
+		[SerializeField]
+		Button _dataSave;
+
+		[SerializeField]
+		Button _dataLoad;
 
 		[Header("Bottom Material Dock")]
 
@@ -137,6 +152,8 @@ namespace Seiro.GPUVerlet.Demo
 
 		List<string> _editHistory = null;
 		int _editPointer = 0;
+
+		static readonly string _outputDataPath = "Seiro/GPUVerlet/Demo_Refix/04_SimpleEditor/Output";
 
 		#region MonoBehaviourイベント
 
@@ -594,6 +611,15 @@ namespace Seiro.GPUVerlet.Demo
 				_toolMove.onValueChanged.AddListener(HandleChangedEditMove);
 			}
 
+			if (_dataSave)
+			{
+				_dataSave.onClick.AddListener(HandleClickedSave);
+			}
+			if (_dataLoad)
+			{
+				_dataLoad.onClick.AddListener(HandleClickedLoad);
+			}
+
 			if (_particleSlot1)
 			{
 				_particleSlot1.onValueChanged.AddListener(HandleChangedParticleMaterialSlot1);
@@ -622,7 +648,8 @@ namespace Seiro.GPUVerlet.Demo
 			{
 				_playerState = PlayerState.Play;
 				_model.isSimulated = true;
-				_particlePicker.enabled = true;
+				// _particlePicker.enabled = true;
+				_interactionScript.enabled = true;
 			}
 		}
 
@@ -636,7 +663,8 @@ namespace Seiro.GPUVerlet.Demo
 			{
 				_playerState = PlayerState.Stop;
 				_model.isSimulated = false;
-				_particlePicker.enabled = false;
+				// _particlePicker.enabled = false;
+				_interactionScript.enabled = false;
 
 				SetDirty();
 			}
@@ -714,6 +742,27 @@ namespace Seiro.GPUVerlet.Demo
 			{
 				_editType = EditType.Move;
 			}
+		}
+
+		/// <summary>
+		/// saveボタンを押したとき
+		/// </summary>
+		void HandleClickedSave()
+		{
+#if UNITY_EDITOR
+			var path = Application.dataPath + "/" + _outputDataPath;
+			var uniquePath = AssetDatabase.GenerateUniqueAssetPath(path);
+			AssetDatabase.CreateAsset(_structure, uniquePath);
+			AssetDatabase.Refresh();
+#endif
+		}
+
+		/// <summary>
+		/// loadボタンを押したとき
+		/// </summary>
+		void HandleClickedLoad()
+		{
+			
 		}
 
 		/// <summary>
