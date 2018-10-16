@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77155699ddb2b4e07b6537505d146071, type: 3}
+  m_Name: SimpleTree
+  m_EditorClassIdentifier: 
+  _branchMaxDepth:
+    _min: 12
+    _max: 24
+  _branchLengthFactor: 0.5
+  _branchLengthCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0.6
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.4211663
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  _branchAngleFactor: 0
+  _branchAngleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.1
+      value: -1
+      inSlope: 3.2486022
+      outSlope: 3.2486022
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.3
+      value: 1
+      inSlope: 1.0000169
+      outSlope: 1.0000169
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: -2
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  _supportEdgeInterval: 0200000004000000
+  _branchEdgeBuilder: {fileID: 11400000, guid: 66203995a7ed14213ae0632fc5577a5e, type: 2}
+  _branchParticleBuilder: {fileID: 11400000, guid: 6795d625dbe7047739d5e73bcddad234,
+    type: 2}
+  _subBranchArchitect: {fileID: 0}
+  _connectionEdgeBuilder: {fileID: 0}
